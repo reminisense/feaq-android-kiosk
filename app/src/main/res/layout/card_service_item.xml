@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imgServiceBox"
+            android:src="@drawable/service_box_default"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Service_Name"
+            android:id="@+id/lblServiceName"
+            android:layout_alignTop="@+id/imgServiceBox"
+            android:layout_toRightOf="@+id/imgServiceBox"
+            android:layout_toEndOf="@+id/imgServiceBox"
+            android:textSize="28sp"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PEOPLE IN LINE: 6"
+            android:id="@+id/lblPeopleInLine"
+            android:layout_alignBottom="@+id/imgServiceBox"
+            android:layout_toRightOf="@+id/imgServiceBox"
+            android:layout_toEndOf="@+id/imgServiceBox"
+            android:textColor="@color/black" />
+    </RelativeLayout>
+
+</LinearLayout>

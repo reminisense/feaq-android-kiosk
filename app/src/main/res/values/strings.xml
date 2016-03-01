@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">FeatherQ Kiosk</string>
+    <string name="preference_key">kiosk</string>
+
+    <!--<string name="facebook_app_id">1577295149183234</string>--> <!--FeatherQ - Local-->
+    <string name="facebook_app_id">1574952899417459</string>
+    <!--FeatherQ - Prod-->
+    <string name="quit">Quit Application</string>
+    <string name="really_quit">Are You Sure?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="loading_data">Loading data...</string>
+
+</resources>
