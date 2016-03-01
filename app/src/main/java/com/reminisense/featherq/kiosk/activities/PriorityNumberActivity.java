@@ -1,16 +1,22 @@
 package com.reminisense.featherq.kiosk.activities;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Context;
 import android.os.Bundle;
+import android.print.PrintManager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.reminisense.featherq.kiosk.R;
+import com.reminisense.featherq.kiosk.adapters.PrintNumberAdapter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+/**
+ * Created by Nico on 3/1/2016.
+ */
 public class PriorityNumberActivity extends AppCompatActivity {
 
     @Bind(R.id.lblUserName) TextView userName;
@@ -51,7 +57,16 @@ public class PriorityNumberActivity extends AppCompatActivity {
     private class PrintClickListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
+            Context context = view.getContext();
+            // Get a PrintManager instance
+            PrintManager printManager = (PrintManager) context.getSystemService(Context.PRINT_SERVICE);
 
+            // Set job name, which will be displayed in the print queue
+            String jobName = "Print FeatherQ Kiosk Ticket";
+
+            // Start a print job, passing in a PrintDocumentAdapter implementation
+            // to handle the generation of a print document
+            printManager.print(jobName, new PrintNumberAdapter(context, priorityNumberData, serviceNameData), null);
         }
     }
 
