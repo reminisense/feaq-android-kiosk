@@ -1,4 +1,4 @@
-package com.reminisense.featherq.kiosk.adapters;
+package com.reminisense.featherq.kiosk.print.adapters;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -15,6 +15,8 @@ import android.print.PrintDocumentAdapter;
 import android.print.PrintDocumentInfo;
 import android.print.pdf.PrintedPdfDocument;
 
+import com.reminisense.featherq.kiosk.print.bean.QueueDetails;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -26,13 +28,11 @@ public class PrintNumberAdapter extends PrintDocumentAdapter {
     private int pageHeight;
     private int pageWidth;
     private PdfDocument myPdfDocument;
-    private String assignedNumber;
-    private String serviceName;
+    private QueueDetails queueDetails;
 
-    public PrintNumberAdapter(Context context, String assignedNumber, String serviceName) {
+    public PrintNumberAdapter(Context context, QueueDetails queueDetails) {
         this.context = context;
-        this.assignedNumber = assignedNumber;
-        this.serviceName = serviceName;
+        this.queueDetails = queueDetails;
     }
 
     @Override
@@ -61,7 +61,6 @@ public class PrintNumberAdapter extends PrintDocumentAdapter {
 
         PageInfo newPage = new PageInfo.Builder(pageWidth, pageHeight, 1).create();
         PdfDocument.Page page = myPdfDocument.startPage(newPage);
-
         if (cancellationSignal.isCanceled()) {
             callback.onWriteCancelled();
             myPdfDocument.close();
@@ -87,7 +86,6 @@ public class PrintNumberAdapter extends PrintDocumentAdapter {
 
     private void drawPage(PdfDocument.Page page) {
         Canvas canvas = page.getCanvas();
-
         int titleBaseLine = 72;
         int leftMargin = 54;
 
@@ -95,8 +93,8 @@ public class PrintNumberAdapter extends PrintDocumentAdapter {
         Paint paint = new Paint();
         paint.setColor(Color.BLACK);
         paint.setTextSize(30);
-        canvas.drawText("Assigned number:" + assignedNumber, leftMargin, titleBaseLine, paint);
-        canvas.drawText("Service name: " + serviceName, leftMargin, titleBaseLine + 40, paint);
+        canvas.drawText("Assigned number:" + queueDetails.getAssignedNumber(), leftMargin, titleBaseLine, paint);
+        canvas.drawText("Service name: " + queueDetails.getServiceName(), leftMargin, titleBaseLine + 40, paint);
 
     }
 }

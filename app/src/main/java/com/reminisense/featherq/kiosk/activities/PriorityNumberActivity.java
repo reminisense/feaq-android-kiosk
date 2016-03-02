@@ -9,7 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.reminisense.featherq.kiosk.R;
-import com.reminisense.featherq.kiosk.adapters.PrintNumberAdapter;
+import com.reminisense.featherq.kiosk.print.adapters.PrintNumberAdapter;
+import com.reminisense.featherq.kiosk.print.bean.QueueDetails;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -66,7 +67,11 @@ public class PriorityNumberActivity extends AppCompatActivity {
 
             // Start a print job, passing in a PrintDocumentAdapter implementation
             // to handle the generation of a print document
-            printManager.print(jobName, new PrintNumberAdapter(context, priorityNumberData, serviceNameData), null);
+            QueueDetails qd = new QueueDetails();
+            qd.setAssignedNumber(priorityNumberData);
+            qd.setServiceName(serviceNameData);
+            qd.setUserName(userNameData);
+            printManager.print(jobName, new PrintNumberAdapter(context, qd), null);
         }
     }
 
