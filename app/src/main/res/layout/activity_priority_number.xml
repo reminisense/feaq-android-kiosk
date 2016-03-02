@@ -121,7 +121,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nico Martin"
+            android:text="&lt;User Name>"
             android:id="@+id/lblUserName"
             android:textSize="32sp"
             android:textColor="@color/black"
@@ -143,7 +143,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="A123"
+            android:text="&lt;Priority Number>"
             android:id="@+id/lblPriorityNumber"
             android:textSize="32sp"
             android:textColor="@color/colorPrimaryDark"
@@ -161,7 +161,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Customer Service"
+            android:text="&lt;Service Name>"
             android:id="@+id/lblServiceName"
             android:textSize="28sp"
             android:textColor="@color/colorPrimaryDark"

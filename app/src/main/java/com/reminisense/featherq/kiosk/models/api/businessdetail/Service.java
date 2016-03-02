@@ -16,6 +16,7 @@ public class Service {
     @SerializedName("business_id")
     private int businessId;
 
+    @SerializedName("name")
     private String name;
 
     @SerializedName("people_in_queue")
