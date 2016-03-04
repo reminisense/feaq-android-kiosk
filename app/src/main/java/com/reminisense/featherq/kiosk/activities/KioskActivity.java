@@ -1,18 +1,15 @@
 package com.reminisense.featherq.kiosk.activities;
 
-import android.app.ActionBar;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -49,11 +46,16 @@ public class KioskActivity extends AppCompatActivity {
     private BusinessDetail businessDetail;
     private List<Service> serviceList = new ArrayList<>();
 
-    @Bind(R.id.recyclerServices) RecyclerView recyclerServices;
-    @Bind(R.id.edtName) EditText name;
-    @Bind(R.id.edtPhone) EditText phone;
-    @Bind(R.id.edtEmail) EditText email;
-    @Bind(R.id.btnGetNumber) AppCompatButton getNumber;
+    @Bind(R.id.recyclerServices)
+    RecyclerView recyclerServices;
+    @Bind(R.id.edtName)
+    EditText name;
+    @Bind(R.id.edtPhone)
+    EditText phone;
+    @Bind(R.id.edtEmail)
+    EditText email;
+    @Bind(R.id.btnGetNumber)
+    AppCompatButton getNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +97,8 @@ public class KioskActivity extends AppCompatActivity {
             decorView.setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                             | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);}
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        }
     }
 
     private void getBusinessDetails() {
@@ -143,9 +146,9 @@ public class KioskActivity extends AppCompatActivity {
         call.enqueue(new Callback<PriorityNumber>() {
             @Override
             public void onResponse(Call<PriorityNumber> call, Response<PriorityNumber> response) {
-                if ( response.code() == 200 ) {
+                if (response.code() == 200) {
                     PriorityNumber number = response.body();
-                    if ( number != null ) {
+                    if (number != null) {
                         // success! handle the new number/service/etc details
                         // also open new intent
                         Intent intent = new Intent();
@@ -154,6 +157,7 @@ public class KioskActivity extends AppCompatActivity {
                         intent.putExtra("user_name", name);
                         intent.putExtra("priority_number", number.getNumberAssigned());
                         intent.putExtra("service_name", CacheManager.retrieveSelectedService(context).getName());
+                        intent.putExtra("business_name", businessDetail.getBusinessName());
 
                         clearInputs();
                         startActivity(intent);
@@ -182,20 +186,19 @@ public class KioskActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         //Handle the back button
-        if(keyCode == KeyEvent.KEYCODE_BACK) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             Intent intent = new Intent();
             intent.setClassName(BuildConfig.APPLICATION_ID,
                     BuildConfig.APPLICATION_ID + ".activities.ConfirmExitActivity");
             startActivity(intent);
             return true;
-        }
-        else {
+        } else {
             return super.onKeyDown(keyCode, event);
         }
     }
 
     public void setGetNumberActive(boolean isActive) {
-        if ( isActive ) {
+        if (isActive) {
             getNumber.setEnabled(true);
 
             ColorStateList colorStateList = ColorStateList.valueOf(
@@ -224,17 +227,19 @@ public class KioskActivity extends AppCompatActivity {
 
     public class InputTextListener implements TextWatcher {
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
 
         @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
 
         @Override
         public void afterTextChanged(Editable editable) {
             // check if edit texts have inputs
             // if yes, enable button
-            if ( !name.getText().toString().isEmpty()
-                && !phone.getText().toString().isEmpty() ) {
+            if (!name.getText().toString().isEmpty()
+                    && !phone.getText().toString().isEmpty()) {
                 // name and phone have inputs!
                 // thus, enable get number button
                 setGetNumberActive(true);
@@ -251,17 +256,51 @@ public class KioskActivity extends AppCompatActivity {
         public void onClick(View view) {
             Service service = CacheManager.retrieveSelectedService(context);
 
-            if ( service == null ) {
+            if (service == null) {
                 Toast.makeText(KioskActivity.this, "Please select a service from the list first", Toast.LENGTH_LONG).show();
             } else {
-                // success! do things to give user a number here
-                /*Toast.makeText(KioskActivity.this, "You selected " + service.getServiceId() + "!", Toast.LENGTH_SHORT).show();*/
-                String nameData = name.getText().toString();
-                String phoneData = phone.getText().toString();
-                String emailData = email.getText().toString();
+                // validate form
+                if (isValidForm()) {
 
-                getPriorityNumber(service.getServiceId(), nameData, phoneData, emailData);
+                    // success! do things to give user a number here
+                    String nameData = name.getText().toString();
+                    String phoneData = phone.getText().toString();
+                    String emailData = email.getText().toString();
+
+                    getPriorityNumber(service.getServiceId(), nameData, phoneData, emailData);
+                }
             }
+        }
+
+        private boolean isValidForm() {
+            String nameData = name.getText().toString();
+            String emailData = email.getText().toString();
+            String phoneData = phone.getText().toString();
+
+            // name should not be empty
+            if (TextUtils.isEmpty(nameData)) {
+                name.setError("Please tell us your name.");
+                return false;
+            } else if (nameData.length() < 4) {
+                name.setError("Your name looks a bit too short.");
+                return false;
+            }
+
+            // user should input at least 1 contact detail
+            if (TextUtils.getTrimmedLength(emailData) == 0 || TextUtils.getTrimmedLength(phoneData) == 0) {
+                phone.setError("Please provide a way for us to contact you.");
+                return false;
+            }
+
+            // email should have an @ symbol
+            if (!TextUtils.isEmpty(emailData)) {
+                if (!emailData.contains("@")) {
+                    email.setError("Oops! You entered an invalid email.");
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

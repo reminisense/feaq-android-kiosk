@@ -41,7 +41,10 @@
             android:name=".activities.ConfirmExitActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape" />
-        <activity android:name=".activities.PriorityNumberActivity"></activity>
+        <activity
+            android:name=".activities.PriorityNumberActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>
