@@ -7,6 +7,7 @@ package com.reminisense.featherq.kiosk.print.bean;
  */
 public class QueueDetails {
     private String assignedNumber;
+    private String businessName;
     private String serviceName;
     private String userName;
     private String email;
@@ -18,6 +19,14 @@ public class QueueDetails {
 
     public void setAssignedNumber(String assignedNumber) {
         this.assignedNumber = assignedNumber;
+    }
+
+    public String getBusinessName() {
+        return businessName;
+    }
+
+    public void setBusinessName(String businessName) {
+        this.businessName = businessName;
     }
 
     public String getServiceName() {

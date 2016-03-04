@@ -20,15 +20,23 @@ import butterknife.ButterKnife;
  */
 public class PriorityNumberActivity extends AppCompatActivity {
 
-    @Bind(R.id.lblUserName) TextView userName;
-    @Bind(R.id.lblPriorityNumber) TextView priorityNumber;
-    @Bind(R.id.lblServiceName) TextView serviceName;
-    @Bind(R.id.btnPrint) Button print;
-    @Bind(R.id.btnClose) Button close;
+    @Bind(R.id.lblUserName)
+    TextView userName;
+    @Bind(R.id.lblPriorityNumber)
+    TextView priorityNumber;
+    @Bind(R.id.lblServiceName)
+    TextView serviceName;
+    @Bind(R.id.btnPrint)
+    Button print;
+    @Bind(R.id.btnClose)
+    Button close;
+    @Bind(R.id.layoutKioskRightContainer)
+    View layoutKioskRightContainer;
 
     private String userNameData;
     private String priorityNumberData;
     private String serviceNameData;
+    private String businessNameData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +48,7 @@ public class PriorityNumberActivity extends AppCompatActivity {
         userNameData = bundle.getString("user_name");
         priorityNumberData = bundle.getString("priority_number");
         serviceNameData = bundle.getString("service_name");
+        businessNameData = bundle.getString("business_name");
 
     }
 
@@ -71,7 +80,9 @@ public class PriorityNumberActivity extends AppCompatActivity {
             qd.setAssignedNumber(priorityNumberData);
             qd.setServiceName(serviceNameData);
             qd.setUserName(userNameData);
-            printManager.print(jobName, new PrintNumberAdapter(context, qd), null);
+            qd.setBusinessName(businessNameData);
+
+            printManager.print(jobName, new PrintNumberAdapter(context, layoutKioskRightContainer, qd), null);
         }
     }
 

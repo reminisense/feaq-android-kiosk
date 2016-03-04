@@ -157,6 +157,7 @@ public class KioskActivity extends AppCompatActivity {
                         intent.putExtra("user_name", name);
                         intent.putExtra("priority_number", number.getNumberAssigned());
                         intent.putExtra("service_name", CacheManager.retrieveSelectedService(context).getName());
+                        intent.putExtra("business_name", businessDetail.getBusinessName());
 
                         clearInputs();
                         startActivity(intent);
