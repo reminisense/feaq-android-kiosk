@@ -16,6 +16,7 @@
 
 package com.reminisense.featherq.kiosk.activities;
 
+
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;

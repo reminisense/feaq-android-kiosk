@@ -14,6 +14,7 @@ import com.zj.btsdk.BluetoothService;
  */
 public class BluetoothHandler extends Handler {
 
+
     private static final String TAG = "BluetoothHandler";
     @Override
     public void handleMessage(Message msg) {

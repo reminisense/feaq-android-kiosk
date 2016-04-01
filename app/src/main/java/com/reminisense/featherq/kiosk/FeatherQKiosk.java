@@ -5,6 +5,7 @@ import android.content.Context;
 
 /**
  * Singleton to access context anywhere in the app.
+ * 
  * Created by Nigs on 2016-04-01.
  */
 public class FeatherQKiosk extends Application {
