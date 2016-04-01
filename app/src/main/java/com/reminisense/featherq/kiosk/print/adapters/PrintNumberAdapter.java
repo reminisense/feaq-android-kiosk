@@ -38,7 +38,7 @@ public class PrintNumberAdapter extends PrintDocumentAdapter {
     private View view;
 
     /**
-     * Contructor.
+     * Constructor.
      *
      * @param context      current Android context
      * @param queueDetails data to be printed
